@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球各国时差・电压频率参数及爱优特产品适配对照表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: white;
+            font-size: 0.95rem;
+        }
+        
+        .search-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .search-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .time-display {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+        }
+        
+        thead {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            position: sticky;
+            top: 0;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        td {
+            padding: 15px 12px;
+            vertical-align: middle;
+        }
+        
+        .flag-cell {
+            width: 120px;
+        }
+        
+        .flag-img {
+            width: 80px;
+            height: 50px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .country-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.05rem;
+        }
+        
+        .time-diff {
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+        
+        .time-diff.positive {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+        }
+        
+        .time-diff.negative {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #c0392b;
+        }
+        
+        .time-diff.zero {
+            background-color: rgba(52, 152, 219, 0.15);
+            color: #2980b9;
+        }
+        
+        .power-badge {
+            background-color: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333;
+            white-space: nowrap;
+        }
+        
+        .product-match {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            max-width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        
+        .product-match span {
+            display: inline-block;
+            background-color: #e1f5fe;
+            padding: 2px 6px;
+            margin: 2px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+        
+        .notes {
+            background-color: #fff9e6;
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .notes h3 {
+            color: #d35400;
+            margin-bottom: 8px;
+        }
+        
+        .notes ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media print {
+            .controls, .time-display, footer {
+                display: none;
+            }
+            body {
+                background-color: white;
+                padding: 10px;
+            }
+            .table-container {
+                box-shadow: none;
+                margin-bottom: 20px;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+            .product-match {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-box, .filter-controls {
+                width: 100%;
+            }
+            
+            .table-container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>全球各国时差・电压频率参数及爱优特产品适配对照表</h1>
+        <div class="subtitle">全球国家/地区时差/电压/频率 + 按电压&频率匹配爱优特产品型号（完整匹配）</div>
+        <div class="time-display">
+            <span id="current-time">北京时间: 正在加载...</span>
+        </div>
+    </header>
+    
+    <!-- 全球国家表格控件 -->
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="搜索国家或地区..." onkeypress="handleKeyPress(event)">
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="product-search" placeholder="输入产品型号搜索（如 FAH-M-A）..." onkeypress="handleKeyPress(event)">
+        </div>
+        
+        <div class="filter-controls">
+            <select id="continent-filter">
+                <option value="">所有大洲</option>
+                <option value="亚洲">亚洲</option>
+                <option value="欧洲">欧洲</option>
+                <option value="非洲">非洲</option>
+                <option value="北美洲">北美洲</option>
+                <option value="南美洲">南美洲</option>
+                <option value="大洋洲">大洋洲</option>
+            </select>
+            
+            <select id="time-filter">
+                <option value="">所有时差</option>
+                <option value="same">与北京时间相同</option>
+                <option value="ahead">比北京早</option>
+                <option value="behind">比北京晚</option>
+            </select>
+            
+            <select id="sort-filter">
+                <option value="name">按国家排序</option>
+                <option value="time">按时差排序</option>
+                <option value="continent">按大洲排序</option>
+            </select>
+            
+            <button id="search-btn" class="search-btn">搜索</button>
+        </div>
+    </div>
+    
+    <!-- 全球国家表格 -->
+    <div class="table-container">
+        <table id="country-table">
+            <thead>
+                <tr>
+                    <th>国旗</th>
+                    <th>国家/地区</th>
+                    <th>首都/主要城市</th>
+                    <th>大洲</th>
+                    <th>时区</th>
+                    <th>与北京时差</th>
+                    <th>当地时间</th>
+                    <th>电压 (V)</th>
+                    <th>频率 (Hz)</th>
+                    <th>适用产品型号<br><small>（按电压+频率匹配）</small></th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- 通过JavaScript动态生成 -->
+            </tbody>
+         </table>
+    </div>
+    
+    <!-- 电力小贴士 -->
+    <div class="notes">
+        <h3>使用说明与电力小贴士</h3>
+        <ul>
+            <li>本表格以中国北京时间 (UTC+8) 为基准，显示全球主要国家/地区的时差及电力标准。</li>
+            <li><strong>电压/频率说明</strong>：数据主要参考国际电力标准。部分国家（如巴西、日本）存在多种标准，表格中列出的是最常见值。</li>
+            <li><strong>设备兼容性</strong>：大多数现代电子设备（如手机、笔记本充电器）支持宽电压（100-240V），仅需准备插头转换器即可。若设备仅支持单一电压（如110V），在220V国家使用需配备变压器。</li>
+            <li><strong>插头类型</strong>：除电压频率外，不同国家插头形状各异（如欧洲C/F型、美式A/B型、英式G型）。建议根据目的地提前准备“全球通用转换插头”。</li>
+            <li><strong>匹配产品说明</strong>：最后一列根据国家电压和频率自动筛选爱优特产品中电气参数完全兼容的型号（仅考虑交流产品）。所有匹配型号全部列出，可通过右侧滚动条查看。</li>
+            <li><strong>按钮搜索</strong>：所有筛选条件需点击“搜索”按钮或按回车键后才生效。</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>数据最后更新：<span id="update-date">2025年3月</span> | 注：时差与电力信息仅供参考，出行前请以当地最新标准为准；产品参数请以官方最新资料为准。</p>
+    </footer>
+
+    <script>
+        // ---------- 1. 爱优特产品数据（根据新表更新）----------
+        const products = [
+            // FAH系列
+            { name: "FAH-G-AE", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-A", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-A2", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-A-BOX2A", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-M-A", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FAH-M-A（UL)", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FAH M-BE", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FAH-M-BOX2M", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-M-BOX3M", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FAH-P", voltage: "100-240VAC", freq: "50-60Hz" },
+            // FFC系列
+            { name: "FFC-S", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-A", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-A2", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-B2", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC MH-A3", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC MH-B3", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-C3", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-D3", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-K", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FFC-G", voltage: "100-240VAC", freq: "50-60Hz" },
+            // KJ系列
+            { name: "KJ 300", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "KJ 400", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "KJ 500", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "KJ 750", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FSA系列
+            { name: "FSA550M-A", voltage: "100-240VAC", freq: "50-60Hz" },
+            // PSA系列
+            { name: "PSA300-W", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "PSA350-W", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "PSA650-W", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FAD系列
+            { name: "FAD60M-A", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "FAD-M-A", voltage: "100-240VAC", freq: "50-60Hz" },
+            // PAD
+            { name: "PAD-A", voltage: "220-240V", freq: "50-60Hz" },
+            // EAF系列（直流为主，部分交流）
+            { name: "EAF1\"2\"M", voltage: "DC12V", freq: "-" },
+            { name: "EAF4\"5\"M", voltage: "DC24V", freq: "-" },
+            { name: "适配器", voltage: "100-240VAC", freq: "50-60Hz" },
+            { name: "EAF-BOX", voltage: "100-240VAC", freq: "50-60Hz" },
+            // 节能演示机
+            { name: "Air Handling Unit", voltage: "220-240V", freq: "50-60Hz" },
+            // FKE系列
+            { name: "FKE-K/K2", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FUV-K/K2", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-UV-K/K2", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-AC-K/K2", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-G-2E", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-KD", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-UV-KD", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKH11-UV", voltage: "380VAC", freq: "50Hz" },
+            { name: "FKE-FAN-G", voltage: "220-240VAC", freq: "50Hz" },
+            { name: "FKE-I-G", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FKE-BOX系列
+            { name: "FKE-BOX01", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FKE-AW系列
+            { name: "FKE-BOX01", voltage: "220-240VAC", freq: "50-60Hz" },
+            { name: "FKE-BOX04（PLC）", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FKE-AHW系列
+            { name: "FKE-BOX05（PLC）", voltage: "220-240VAC", freq: "50-60Hz" },
+            // FAC系列
+            { name: "FAC-XX", voltage: "220-240VAC", freq: "50-60Hz" },
+            // AMG系列
+            { name: "AMG1.1", voltage: "5VDC", freq: "-" },
+            { name: "AMG1.3", voltage: "5VDC / 5号电池", freq: "-" },
+            { name: "AMG4.2", voltage: "DC10-30V", freq: "-" },
+            { name: "AMG4.0", voltage: "180~240VAC /7~32VDC", freq: "50-60Hz" },
+            // PM2.5监控系统
+            { name: "Air Quality Monitor", voltage: "100-240VAC", freq: "50-60Hz" },
+            // 演示仪
+            { name: "DEMO1M", voltage: "110V/220V双版本", freq: "50-60Hz" }
+        ];
+
+        // ---------- 2. 解析电压 ----------
+        function parseVoltage(voltageStr) {
+            if (!voltageStr) return null;
+            let str = voltageStr.toString().trim();
+            const isDC = str.includes('DC') || str.includes('VDC') || str.includes('电池') || (str.includes('V') && !str.includes('AC') && !str.includes('~') && !str.includes('-') && !str.includes('±'));
+            let min = null, max = null;
+            
+            // 处理双版本（如110V/220V双版本）
+            if (str.includes('/') && !str.includes('-') && !str.includes('~')) {
+                const parts = str.split('/');
+                let nums = [];
+                for (let part of parts) {
+                    const match = part.match(/(\d+)/);
+                    if (match) nums.push(parseInt(match[1]));
+                }
+                if (nums.length === 2) {
+                    min = Math.min(nums[0], nums[1]);
+                    max = Math.max(nums[0], nums[1]);
+                    return { min, max, type: 'AC' };
+                }
+            }
+            
+            if (str.includes('±')) {
+                const match = str.match(/(\d+)\s*VAC?\s*±\s*(\d+)%/);
+                if (match) {
+                    let base = parseInt(match[1]);
+                    let percent = parseInt(match[2]);
+                    min = base * (100 - percent) / 100;
+                    max = base * (100 + percent) / 100;
+                    return { min, max, type: isDC ? 'DC' : 'AC' };
+                }
+            }
+            const rangeMatch = str.match(/(\d+)\s*[~-]\s*(\d+)/);
+            if (rangeMatch) {
+                min = parseInt(rangeMatch[1]);
+                max = parseInt(rangeMatch[2]);
+                return { min, max, type: isDC ? 'DC' : 'AC' };
+            }
+            const singleMatch = str.match(/(\d+)\s*V/);
+            if (singleMatch) {
+                let val = parseInt(singleMatch[1]);
+                min = max = val;
+                return { min, max, type: isDC ? 'DC' : 'AC' };
+            }
+            const simpleRange = str.match(/(\d+)-(\d+)/);
+            if (simpleRange) {
+                min = parseInt(simpleRange[1]);
+                max = parseInt(simpleRange[2]);
+                return { min, max, type: isDC ? 'DC' : 'AC' };
+            }
+            const tildeMatch = str.match(/(\d+)~(\d+)/);
+            if (tildeMatch) {
+                min = parseInt(tildeMatch[1]);
+                max = parseInt(tildeMatch[2]);
+                return { min, max, type: isDC ? 'DC' : 'AC' };
+            }
+            return null;
+        }
+
+        // ---------- 3. 解析频率类型 ----------
+        function parseFreqType(freqStr) {
+            if (!freqStr) return null;
+            let s = freqStr.toString().trim();
+            if (s.includes('/') || s.includes('-')) return 'both';
+            if (s.includes('50')) return '50';
+            if (s.includes('60')) return '60';
+            return null;
+        }
+
+        const parsedProducts = products.map(p => {
+            const voltageParsed = parseVoltage(p.voltage);
+            const freqType = parseFreqType(p.freq);
+            return {
+                ...p,
+                voltageMin: voltageParsed ? voltageParsed.min : null,
+                voltageMax: voltageParsed ? voltageParsed.max : null,
+                voltageType: voltageParsed ? voltageParsed.type : 'unknown',
+                freqType: freqType
+            };
+        }).filter(p => p.voltageMin !== null && p.voltageType !== 'DC'); // 只保留交流产品
+
+        // ---------- 4. 国家/地区数据（新增中国香港、中国台湾、中国澳门）----------
+        const countries = [
+            // 中国及港澳台地区
+            { name: "中国", capital: "北京", continent: "亚洲", timezone: "UTC+8", code: "cn", offset: 0, voltage: "220V", frequency: "50Hz" },
+            { name: "中国香港", capital: "香港", continent: "亚洲", timezone: "UTC+8", code: "hk", offset: 0, voltage: "220V", frequency: "50Hz" },
+            { name: "中国台湾", capital: "台北", continent: "亚洲", timezone: "UTC+8", code: "tw", offset: 0, voltage: "110V", frequency: "60Hz" },
+            { name: "中国澳门", capital: "澳门", continent: "亚洲", timezone: "UTC+8", code: "mo", offset: 0, voltage: "220V", frequency: "50Hz" },
+            
+            // 亚洲其他国家
+            { name: "日本", capital: "东京", continent: "亚洲", timezone: "UTC+9", code: "jp", offset: 1, voltage: "100V", frequency: "50/60Hz" },
+            { name: "韩国", capital: "首尔", continent: "亚洲", timezone: "UTC+9", code: "kr", offset: 1, voltage: "220V", frequency: "60Hz" },
+            { name: "朝鲜", capital: "平壤", continent: "亚洲", timezone: "UTC+9", code: "kp", offset: 1, voltage: "220V", frequency: "50Hz" },
+            { name: "蒙古", capital: "乌兰巴托", continent: "亚洲", timezone: "UTC+8", code: "mn", offset: 0, voltage: "220V", frequency: "50Hz" },
+            { name: "越南", capital: "河内", continent: "亚洲", timezone: "UTC+7", code: "vn", offset: -1, voltage: "220V", frequency: "50Hz" },
+            { name: "老挝", capital: "万象", continent: "亚洲", timezone: "UTC+7", code: "la", offset: -1, voltage: "230V", frequency: "50Hz" },
+            { name: "柬埔寨", capital: "金边", continent: "亚洲", timezone: "UTC+7", code: "kh", offset: -1, voltage: "230V", frequency: "50Hz" },
+            { name: "泰国", capital: "曼谷", continent: "亚洲", timezone: "UTC+7", code: "th", offset: -1, voltage: "220V", frequency: "50Hz" },
+            { name: "缅甸", capital: "内比都", continent: "亚洲", timezone: "UTC+6:30", code: "mm", offset: -1.5, voltage: "230V", frequency: "50Hz" },
+            { name: "马来西亚", capital: "吉隆坡", continent: "亚洲", timezone: "UTC+8", code: "my", offset: 0, voltage: "240V", frequency: "50Hz" },
+            { name: "新加坡", capital: "新加坡", continent: "亚洲", timezone: "UTC+8", code: "sg", offset: 0, voltage: "230V", frequency: "50Hz" },
+            { name: "印度尼西亚", capital: "雅加达", continent: "亚洲", timezone: "UTC+7/+8/+9", code: "id", offset: -1, voltage: "220V", frequency: "50Hz" },
+            { name: "菲律宾", capital: "马尼拉", continent: "亚洲", timezone: "UTC+8", code: "ph", offset: 0, voltage: "220V", frequency: "60Hz" },
+            { name: "文莱", capital: "斯里巴加湾市", continent: "亚洲", timezone: "UTC+8", code: "bn", offset: 0, voltage: "240V", frequency: "50Hz" },
+            { name: "东帝汶", capital: "帝力", continent: "亚洲", timezone: "UTC+9", code: "tl", offset: 1, voltage: "220V", frequency: "50Hz" },
+            { name: "印度", capital: "新德里", continent: "亚洲", timezone: "UTC+5:30", code: "in", offset: -2.5, voltage: "230V", frequency: "50Hz" },
+            { name: "巴基斯坦", capital: "伊斯兰堡", continent: "亚洲", timezone: "UTC+5", code: "pk", offset: -3, voltage: "230V", frequency: "50Hz" },
+            { name: "孟加拉国", capital: "达卡", continent: "亚洲", timezone: "UTC+6", code: "bd", offset: -2, voltage: "220V", frequency: "50Hz" },
+            { name: "斯里兰卡", capital: "科伦坡", continent: "亚洲", timezone: "UTC+5:30", code: "lk", offset: -2.5, voltage: "230V", frequency: "50Hz" },
+            { name: "尼泊尔", capital: "加德满都", continent: "亚洲", timezone: "UTC+5:45", code: "np", offset: -2.25, voltage: "230V", frequency: "50Hz" },
+            { name: "不丹", capital: "廷布", continent: "亚洲", timezone: "UTC+6", code: "bt", offset: -2, voltage: "230V", frequency: "50Hz" },
+            { name: "马尔代夫", capital: "马累", continent: "亚洲", timezone: "UTC+5", code: "mv", offset: -3, voltage: "230V", frequency: "50Hz" },
+            { name: "阿富汗", capital: "喀布尔", continent: "亚洲", timezone: "UTC+4:30", code: "af", offset: -3.5, voltage: "220V", frequency: "50Hz" },
+            { name: "伊朗", capital: "德黑兰", continent: "亚洲", timezone: "UTC+3:30", code: "ir", offset: -4.5, voltage: "230V", frequency: "50Hz" },
+            { name: "伊拉克", capital: "巴格达", continent: "亚洲", timezone: "UTC+3", code: "iq", offset: -5, voltage: "230V", frequency: "50Hz" },
+            { name: "沙特阿拉伯", capital: "利雅得", continent: "亚洲", timezone: "UTC+3", code: "sa", offset: -5, voltage: "220V", frequency: "60Hz" },
+            { name: "阿联酋", capital: "阿布扎比", continent: "亚洲", timezone: "UTC+4", code: "ae", offset: -4, voltage: "230V", frequency: "50Hz" },
+            { name: "卡塔尔", capital: "多哈", continent: "亚洲", timezone: "UTC+3", code: "qa", offset: -5, voltage: "240V", frequency: "50Hz" },
+            { name: "科威特", capital: "科威特城", continent: "亚洲", timezone: "UTC+3", code: "kw", offset: -5, voltage: "240V", frequency: "50Hz" },
+            { name: "土耳其", capital: "安卡拉", continent: "亚洲", timezone: "UTC+3", code: "tr", offset: -5, voltage: "230V", frequency: "50Hz" },
+            { name: "哈萨克斯坦", capital: "努尔苏丹", continent: "亚洲", timezone: "UTC+5/+6", code: "kz", offset: -3, voltage: "220V", frequency: "50Hz" },
+            
+            // 欧洲
+            { name: "俄罗斯", capital: "莫斯科", continent: "欧洲", timezone: "UTC+2 至 +12", code: "ru", offset: -6, voltage: "220V", frequency: "50Hz" },
+            { name: "英国", capital: "伦敦", continent: "欧洲", timezone: "UTC+0", code: "gb", offset: -8, voltage: "230V", frequency: "50Hz" },
+            { name: "爱尔兰", capital: "都柏林", continent: "欧洲", timezone: "UTC+0", code: "ie", offset: -8, voltage: "230V", frequency: "50Hz" },
+            { name: "法国", capital: "巴黎", continent: "欧洲", timezone: "UTC+1", code: "fr", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "德国", capital: "柏林", continent: "欧洲", timezone: "UTC+1", code: "de", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "意大利", capital: "罗马", continent: "欧洲", timezone: "UTC+1", code: "it", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "西班牙", capital: "马德里", continent: "欧洲", timezone: "UTC+1", code: "es", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "葡萄牙", capital: "里斯本", continent: "欧洲", timezone: "UTC+0", code: "pt", offset: -8, voltage: "230V", frequency: "50Hz" },
+            { name: "荷兰", capital: "阿姆斯特丹", continent: "欧洲", timezone: "UTC+1", code: "nl", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "比利时", capital: "布鲁塞尔", continent: "欧洲", timezone: "UTC+1", code: "be", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "瑞士", capital: "伯尔尼", continent: "欧洲", timezone: "UTC+1", code: "ch", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "奥地利", capital: "维也纳", continent: "欧洲", timezone: "UTC+1", code: "at", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "瑞典", capital: "斯德哥尔摩", continent: "欧洲", timezone: "UTC+1", code: "se", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "挪威", capital: "奥斯陆", continent: "欧洲", timezone: "UTC+1", code: "no", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "丹麦", capital: "哥本哈根", continent: "欧洲", timezone: "UTC+1", code: "dk", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "芬兰", capital: "赫尔辛基", continent: "欧洲", timezone: "UTC+2", code: "fi", offset: -6, voltage: "230V", frequency: "50Hz" },
+            { name: "冰岛", capital: "雷克雅未克", continent: "欧洲", timezone: "UTC+0", code: "is", offset: -8, voltage: "230V", frequency: "50Hz" },
+            { name: "波兰", capital: "华沙", continent: "欧洲", timezone: "UTC+1", code: "pl", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "捷克", capital: "布拉格", continent: "欧洲", timezone: "UTC+1", code: "cz", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "匈牙利", capital: "布达佩斯", continent: "欧洲", timezone: "UTC+1", code: "hu", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "希腊", capital: "雅典", continent: "欧洲", timezone: "UTC+2", code: "gr", offset: -6, voltage: "230V", frequency: "50Hz" },
+            { name: "乌克兰", capital: "基辅", continent: "欧洲", timezone: "UTC+2", code: "ua", offset: -6, voltage: "230V", frequency: "50Hz" },
+            { name: "北马其顿", capital: "斯科普里", continent: "欧洲", timezone: "UTC+1", code: "mk", offset: -7, voltage: "230V", frequency: "50Hz" },
+            
+            // 非洲
+            { name: "埃及", capital: "开罗", continent: "非洲", timezone: "UTC+2", code: "eg", offset: -6, voltage: "220V", frequency: "50Hz" },
+            { name: "南非", capital: "比勒陀利亚", continent: "非洲", timezone: "UTC+2", code: "za", offset: -6, voltage: "230V", frequency: "50Hz" },
+            { name: "尼日利亚", capital: "阿布贾", continent: "非洲", timezone: "UTC+1", code: "ng", offset: -7, voltage: "230V", frequency: "50Hz" },
+            { name: "肯尼亚", capital: "内罗毕", continent: "非洲", timezone: "UTC+3", code: "ke", offset: -5, voltage: "240V", frequency: "50Hz" },
+            { name: "埃塞俄比亚", capital: "亚的斯亚贝巴", continent: "非洲", timezone: "UTC+3", code: "et", offset: -5, voltage: "220V", frequency: "50Hz" },
+            { name: "摩洛哥", capital: "拉巴特", continent: "非洲", timezone: "UTC+1", code: "ma", offset: -7, voltage: "220V", frequency: "50Hz" },
+            { name: "加纳", capital: "阿克拉", continent: "非洲", timezone: "UTC+0", code: "gh", offset: -8, voltage: "230V", frequency: "50Hz" },
+            
+            // 北美洲
+            { name: "美国", capital: "华盛顿", continent: "北美洲", timezone: "UTC-5 至 -10", code: "us", offset: -13, voltage: "120V", frequency: "60Hz" },
+            { name: "加拿大", capital: "渥太华", continent: "北美洲", timezone: "UTC-3.5 至 -8", code: "ca", offset: -12, voltage: "120V", frequency: "60Hz" },
+            { name: "墨西哥", capital: "墨西哥城", continent: "北美洲", timezone: "UTC-5 至 -8", code: "mx", offset: -13, voltage: "127V", frequency: "60Hz" },
+            { name: "古巴", capital: "哈瓦那", continent: "北美洲", timezone: "UTC-5", code: "cu", offset: -13, voltage: "110/220V", frequency: "60Hz" },
+            { name: "巴拿马", capital: "巴拿马城", continent: "北美洲", timezone: "UTC-5", code: "pa", offset: -13, voltage: "120V", frequency: "60Hz" },
+            { name: "牙买加", capital: "金斯敦", continent: "北美洲", timezone: "UTC-5", code: "jm", offset: -13, voltage: "110V", frequency: "50Hz" },
+            
+            // 南美洲
+            { name: "巴西", capital: "巴西利亚", continent: "南美洲", timezone: "UTC-2 至 -5", code: "br", offset: -11, voltage: "127/220V", frequency: "60Hz" },
+            { name: "阿根廷", capital: "布宜诺斯艾利斯", continent: "南美洲", timezone: "UTC-3", code: "ar", offset: -11, voltage: "220V", frequency: "50Hz" },
+            { name: "智利", capital: "圣地亚哥", continent: "南美洲", timezone: "UTC-3", code: "cl", offset: -11, voltage: "220V", frequency: "50Hz" },
+            { name: "秘鲁", capital: "利马", continent: "南美洲", timezone: "UTC-5", code: "pe", offset: -13, voltage: "220V", frequency: "60Hz" },
+            { name: "哥伦比亚", capital: "波哥大", continent: "南美洲", timezone: "UTC-5", code: "co", offset: -13, voltage: "110V", frequency: "60Hz" },
+            { name: "委内瑞拉", capital: "加拉加斯", continent: "南美洲", timezone: "UTC-4", code: "ve", offset: -12, voltage: "120V", frequency: "60Hz" },
+            { name: "乌拉圭", capital: "蒙得维的亚", continent: "南美洲", timezone: "UTC-3", code: "uy", offset: -11, voltage: "220V", frequency: "50Hz" },
+            
+            // 大洋洲
+            { name: "澳大利亚", capital: "堪培拉", continent: "大洋洲", timezone: "UTC+8 至 +10.5", code: "au", offset: 0, voltage: "230V", frequency: "50Hz" },
+            { name: "新西兰", capital: "惠灵顿", continent: "大洋洲", timezone: "UTC+12", code: "nz", offset: 4, voltage: "230V", frequency: "50Hz" },
+            { name: "斐济", capital: "苏瓦", continent: "大洋洲", timezone: "UTC+12", code: "fj", offset: 4, voltage: "240V", frequency: "50Hz" },
+            { name: "巴布亚新几内亚", capital: "莫尔兹比港", continent: "大洋洲", timezone: "UTC+10", code: "pg", offset: 2, voltage: "240V", frequency: "50Hz" },
+            { name: "汤加", capital: "努库阿洛法", continent: "大洋洲", timezone: "UTC+13", code: "to", offset: 5, voltage: "240V", frequency: "50Hz" },
+        ];
+
+        // 为每个国家提取电压数值和频率类型
+        countries.forEach(c => {
+            let vStr = c.voltage;
+            let match = vStr.match(/(\d+)/);
+            c.voltageNum = match ? parseInt(match[1]) : null;
+            if (vStr.includes('/')) {
+                let parts = vStr.split('/');
+                let firstMatch = parts[0].match(/(\d+)/);
+                c.voltageNum = firstMatch ? parseInt(firstMatch[1]) : null;
+            }
+            c.freqType = parseFreqType(c.frequency);
+        });
+
+        // ---------- 5. 匹配函数：同时考虑电压和频率 ----------
+        function getMatchingProducts(countryVoltageNum, countryFreqType) {
+            if (!countryVoltageNum) return [];
+            let matches = [];
+            parsedProducts.forEach(p => {
+                const voltageMatch = countryVoltageNum >= p.voltageMin - 5 && countryVoltageNum <= p.voltageMax + 5;
+                if (!voltageMatch) return;
+                
+                let freqMatch = false;
+                if (countryFreqType === 'both') {
+                    freqMatch = true;
+                } else if (p.freqType === 'both') {
+                    freqMatch = true;
+                } else if (p.freqType === null) {
+                    freqMatch = false;
+                } else {
+                    freqMatch = (countryFreqType === p.freqType);
+                }
+                
+                if (freqMatch) {
+                    matches.push(p.name);
+                }
+            });
+            return [...new Set(matches)].sort();
+        }
+
+        countries.forEach(c => {
+            c.matchedProducts = getMatchingProducts(c.voltageNum, c.freqType);
+        });
+
+        // ---------- 6. DOM元素和渲染 ----------
+        const tableBody = document.getElementById('table-body');
+        const searchInput = document.getElementById('search-input');
+        const productSearchInput = document.getElementById('product-search');
+        const continentFilter = document.getElementById('continent-filter');
+        const timeFilter = document.getElementById('time-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const searchBtn = document.getElementById('search-btn');
+        const currentTimeElement = document.getElementById('current-time');
+        const updateDateElement = document.getElementById('update-date');
+
+        const now = new Date();
+        updateDateElement.textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+
+        function updateBeijingTime() {
+            const beijingTime = new Date().toLocaleString("zh-CN", { 
+                timeZone: "Asia/Shanghai",
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            currentTimeElement.textContent = `北京时间: ${beijingTime}`;
+        }
+        updateBeijingTime();
+        setInterval(updateBeijingTime, 1000);
+
+        function getLocalTime(offset) {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const localTime = new Date(utc + (3600000 * (8 + offset)));
+            return localTime.toLocaleTimeString("zh-CN", { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        function getFlagUrl(countryCode) {
+            return `https://flagcdn.com/w80/${countryCode}.png`;
+        }
+
+        function renderTableRow(country) {
+            const row = document.createElement('tr');
+            let timeDiffClass = '';
+            if (country.offset > 0) timeDiffClass = 'positive';
+            else if (country.offset < 0) timeDiffClass = 'negative';
+            else timeDiffClass = 'zero';
+            
+            let offsetDisplay = country.offset > 0 ? `+${country.offset}小时` : (country.offset < 0 ? `${country.offset}小时` : `0小时`);
+            
+            const matches = country.matchedProducts;
+            let matchHtml = '';
+            if (matches.length > 0) {
+                matchHtml = '<div class="product-match">' + matches.map(name => `<span>${name}</span>`).join('') + '</div>';
+            } else {
+                matchHtml = '<span style="color:#999;">无匹配交流产品</span>';
+            }
+            
+            row.innerHTML = `
+                <td class="flag-cell"><img src="${getFlagUrl(country.code)}" alt="${country.name}国旗" class="flag-img" onerror="this.src='https://flagcdn.com/w80/un.png'">\u00a0</td>
+                <td><div class="country-name">${country.name}</div></td>
+                <td>${country.capital}</td>
+                <td>${country.continent}</td>
+                <td>${country.timezone}</td>
+                <td><span class="time-diff ${timeDiffClass}">${offsetDisplay}</span></td>
+                <td>${getLocalTime(country.offset)}</td>
+                <td><span class="power-badge">${country.voltage}</span></td>
+                <td><span class="power-badge">${country.frequency}</span></td>
+                <td>${matchHtml}</td>
+            `;
+            return row;
+        }
+
+        function renderTable(countriesToRender) {
+            tableBody.innerHTML = '';
+            if (countriesToRender.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="10" style="text-align: center; padding: 40px;">未找到匹配的国家/地区</td>`;
+                tableBody.appendChild(row);
+                return;
+            }
+            countriesToRender.forEach(c => tableBody.appendChild(renderTableRow(c)));
+        }
+
+        function filterAndSortCountries() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const productTerm = productSearchInput.value.toLowerCase().trim();
+            const selectedContinent = continentFilter.value;
+            const selectedTimeFilter = timeFilter.value;
+            
+            let filtered = countries.filter(c => {
+                const matchSearch = c.name.toLowerCase().includes(searchTerm) || 
+                                   c.capital.toLowerCase().includes(searchTerm) || 
+                                   c.continent.toLowerCase().includes(searchTerm);
+                const matchContinent = !selectedContinent || c.continent === selectedContinent;
+                let matchTime = true;
+                if (selectedTimeFilter === 'same') matchTime = c.offset === 0;
+                else if (selectedTimeFilter === 'ahead') matchTime = c.offset > 0;
+                else if (selectedTimeFilter === 'behind') matchTime = c.offset < 0;
+                
+                let matchProduct = true;
+                if (productTerm !== '') {
+                    matchProduct = c.matchedProducts.some(p => p.toLowerCase().includes(productTerm));
+                }
+                
+                return matchSearch && matchContinent && matchTime && matchProduct;
+            });
+            
+            const sortBy = sortFilter.value;
+            if (sortBy === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name, 'zh-CN'));
+            else if (sortBy === 'time') filtered.sort((a,b) => b.offset - a.offset);
+            else if (sortBy === 'continent') filtered.sort((a,b) => (a.continent === b.continent) ? a.name.localeCompare(b.name, 'zh-CN') : a.continent.localeCompare(b.continent, 'zh-CN'));
+            
+            return filtered;
+        }
+
+        function updateTable() {
+            renderTable(filterAndSortCountries());
+        }
+
+        updateTable();
+        searchBtn.addEventListener('click', updateTable);
+        window.handleKeyPress = function(event) {
+            if (event.key === 'Enter') {
+                updateTable();
+            }
+        };
+
+        setInterval(() => {
+            const rows = tableBody.querySelectorAll('tr');
+            const filtered = filterAndSortCountries();
+            rows.forEach((row, idx) => {
+                if (filtered[idx]) {
+                    const timeCell = row.cells[6];
+                    timeCell.textContent = getLocalTime(filtered[idx].offset);
+                }
+            });
+        }, 30000);
+    </script>
+</body>
+</html>
